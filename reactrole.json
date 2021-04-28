@@ -1,0 +1,32 @@
+[
+    {
+        "role_name": "admin",
+        "role_id": 739420576677888041,
+        "emoji": "\ud83d\udc40",
+        "message_id": 814929669262540830
+    },
+    {
+        "role_name": "Test-permission",
+        "role_id": 715859090043174952,
+        "emoji": "<:monkaHmm:715878554222592050>",
+        "message_id": 814944180437778452
+    },
+    {
+        "role_name": "pogo raids \u2694\ufe0f",
+        "role_id": 738766962070519809,
+        "emoji": "\ud83c\udfc6",
+        "message_id": 814944698098647050
+    },
+    {
+        "role_name": "nsfw",
+        "role_id": 814944821252063283,
+        "emoji": "\ud83d\udd75\ufe0f",
+        "message_id": 814945692270723082
+    },
+    {
+        "role_name": "ducc-pic-Role",
+        "role_id": 793990874424934421,
+        "emoji": "\ud83e\udd86",
+        "message_id": 821427952683057152
+    }
+]
