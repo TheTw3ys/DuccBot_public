@@ -222,7 +222,7 @@ async def video(ctx, videoart):
                     ]
         embed = f'Zufälliges Video für {ctx.author.mention}\r\n{random.choice(kkkresponse)}'
         await ctx.send(embed)
-        
+
     elif 'swsg' in lowercase:
         swsgresponse=[
         ('https://www.youtube.com/watch?v=2tWMZPxnQNg'),
@@ -342,6 +342,6 @@ async def on_ready():
 
 
 
-#bot.run('NzE1MjE2MzAyODYzNTQ4NTA4.Xs_NDw.pG1GZV1m74gc_Iae7woyqTuhwZg') #TestBot
-bot.run('NzE3MzQ5OTQ3ODU4NDg1MjY4.XtZCMw.goLd0p0F0jas2D3hsoPl1-8jLGI') #DuccBot
+#bot.run('') #TestBot
+bot.run('') #DuccBot
 
