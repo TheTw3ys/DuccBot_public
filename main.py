@@ -7,6 +7,7 @@ import random
 import requests
 import json
 bot = commands.Bot(command_prefix=',', case_intensitive=True,intents=discord.Intents.all())
+reactrole = r"reactrole.json"
 ###########################################################################
 def mess_not_pinned(mess):
     return not mess.pinned #falls die Nachricht gepinnt ist stoppt der Bot
@@ -32,10 +33,10 @@ def get_quote():
 async def on_raw_reaction_add(payload):
 
     if payload.member.bot:
-        pass
+        print("keine Ahnung ein Bot nervt hier ein bisschen")
 
     else:
-        with open(r'reactrole.json') as react_file:
+        with open(reactrole) as react_file:
             data = json.load(react_file)
             for x in data:
                 if x['message_id'] == payload.message_id: #checks if the found member id is equal to the id from the message where a reaction was added
@@ -50,7 +51,7 @@ async def on_raw_reaction_add(payload):
 @bot.event
 async def on_raw_reaction_remove(payload):
 
-    with open(r'reactrole.json') as react_file:
+    with open(reactrole) as react_file:
         data = json.load(react_file)
         for x in data:
             if x['message_id'] == payload.message_id:
@@ -63,7 +64,7 @@ async def on_raw_reaction_remove(payload):
 
 @bot.event
 async def on_message(ctx):
-    lowercase_content = ctx.content.lower() #ACHTUNG Bsp: 'Egal' funktioniert nicht. (lower())
+    lowercase = ctx.content.lower() #ACHTUNG Bsp: 'Egal' funktioniert nicht. (lower())
     if ctx.author.bot:
       return
 
@@ -81,7 +82,7 @@ async def reactrole(ctx, emoji, role: discord.Role, *, message): #siehe raw reac
     msg = await ctx.channel.send(embed=emb)
     await msg.add_reaction(emoji)
 
-    with open(r'reactrole.json') as json_file:
+    with open(reactrole) as json_file:
         data = json.load(json_file)
 
         new_react_role = {'role_name': role.name,
@@ -91,7 +92,7 @@ async def reactrole(ctx, emoji, role: discord.Role, *, message): #siehe raw reac
 
         data.append(new_react_role)
 
-    with open(r'reactrole.json', 'w') as f:
+    with open(reactrole, 'w') as f:
         json.dump(data, f, indent=4)
 #######################################################################
 
@@ -153,16 +154,15 @@ async def _quote(ctx):
             ('`Genauso wie kein Kind auf die Welt kommt und irgendwie direkt rassistisch ist, bin ich auf die Welt gekommen und...uhm...und hatte das Bedürfnis 2 Freundinnen gleichzeitig zu haben.`\r\n~Nebelniek'),
             ]
     response = random.choice(quotes)
-    member = ctx.author
     embed = discord.Embed(color=0x22a7f0)
     embed.add_field(name=f'Quote for {str(ctx.message.author)}', value=response)
     await ctx.send(embed=embed)
 @bot.command(name='partner')
 async def _partner(ctx, aliases=['Beziehungen']):
-    Beziehungen = discord.Embed(title ='**Beziehungen**',
+    beziehungen = discord.Embed(title ='**Beziehungen**',
                                 color = 0x22a7f0)
-    Beziehungen.add_field(name ='Besenkammer und Ententeich', value='Julien x Julien\r\nSelina x Julien\r\nSelina x Emma\r\nSelina x Lu\r\n||Serph x Gracos||\r\nPopo x Elisa\r\nCan x Irb\r\nLevi x Manu\r\nPaul x ducc\r\nYuki x Conni\r\nHees x Appls\r\nHamster x Einsamkeit')
-    await ctx.send(embed=Beziehungen)
+    beziehungen.add_field(name ='Besenkammer und Ententeich', value='Julien x Julien\r\nSelina x Julien\r\nSelina x Emma\r\nSelina x Lu\r\n||Serph x Gracos||\r\nPopo x Elisa\r\nCan x Irb\r\nLevi x Manu\r\nPaul x ducc\r\nYuki x Conni\r\nHees x Appls\r\nHamster x Einsamkeit')
+    await ctx.send(embed=beziehungen)
 @bot.command()
 async def inspire(ctx): #siege get_quote()
   quote = get_quote()
@@ -171,9 +171,9 @@ async def inspire(ctx): #siege get_quote()
   await ctx.message.channel.send(quote)
 @bot.command(name='slap')
 async def _slap(ctx, args1 , args2= None, *, args3 = None):
-    Bool = True
+    boolean = True
     if 'weil' in args2:
-        Bool = False
+        boolean = False
     else:
         pass
     emb_weil = discord.Embed(title='**Slap**', # wenn 'weil' geschrieben wird
@@ -183,7 +183,7 @@ async def _slap(ctx, args1 , args2= None, *, args3 = None):
     emb_n_weil = discord.Embed(title='**SLAP**', # wenn 'weil' nicht geschrieben wird
                           description= '**' + args1 + '**' + ' **wurde geslapped.**\r\n**Weil:**\r\n' + '```' + args2 + ' ' + args3 + '```',
                           color=0x22a7f0)
-    if Bool == True:
+    if boolean == True:
         await ctx.send(embed=emb_n_weil)
     else:
         await ctx.send(embed=emb_weil)
@@ -193,7 +193,6 @@ async def _claim(ctx, member: discord.Member):
                           description=f'{member} wurde von' + str(ctx.message.author.mention) + ' geclaimt',
                           color=0x22a7f0)
     await ctx.message.channel.send(embed=claim)
-    return
 @bot.command(name='someone', aliases=['irgendwer'])
 @has_permissions(kick_members=True)
 async def _someone(ctx):
@@ -205,10 +204,10 @@ async def _noone(ctx):
     await ctx.send('Tja, halt niemand ne.')
 ###################################
 @bot.command(name='video' ,aliases=['random-video'])
-async def video(ctx, Videoart):
-    lowercase_content = Videoart.lower()
-    if 'kkk' in lowercase_content:
-        KKKresponse=[
+async def video(ctx, videoart):
+    lowercase = videoart.lower()
+    if 'kkk' in lowercase:
+        kkkresponse=[
         ('https://www.youtube.com/watch?v=ZxC9UG6s7BQ'),
         ('https://www.youtube.com/watch?v=cDnBGsjJSnU'),
         ('https://www.youtube.com/watch?v=jEV4n_NF8AQ'),
@@ -221,11 +220,10 @@ async def video(ctx, Videoart):
         ('https://www.youtube.com/watch?v=bPMA-Vm-6iE'),
         ('https://www.youtube.com/watch?v=c-a1faxgw1Q'),
                     ]
-        embed = f'Zufälliges Video für {ctx.author.mention}\r\n{random.choice(KKKresponse)}'
+        embed = f'Zufälliges Video für {ctx.author.mention}\r\n{random.choice(kkkresponse)}'
         await ctx.send(embed)
-
-        return
-    elif 'swsg' in lowercase_content:
+        
+    elif 'swsg' in lowercase:
         swsgresponse=[
         ('https://www.youtube.com/watch?v=2tWMZPxnQNg'),
         ('https://www.youtube.com/watch?v=qE__wAywuaE'),
@@ -344,6 +342,6 @@ async def on_ready():
 
 
 
-#bot.run('Token') #TestBot
-bot.run('Token') #DuccBot
+#bot.run('NzE1MjE2MzAyODYzNTQ4NTA4.Xs_NDw.pG1GZV1m74gc_Iae7woyqTuhwZg') #TestBot
+bot.run('NzE3MzQ5OTQ3ODU4NDg1MjY4.XtZCMw.goLd0p0F0jas2D3hsoPl1-8jLGI') #DuccBot
 
